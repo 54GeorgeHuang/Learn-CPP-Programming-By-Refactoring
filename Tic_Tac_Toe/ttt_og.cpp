@@ -8,7 +8,7 @@
 
 int main(void)
 {
-	// init board, 1 = x, 0 = o, -1 = blank
+	// init board, 1 = x, 0 = o, -1 = !(blank)
 	int board[SIZE][SIZE];
 	for (int row = 0; row < SIZE; row++) 
 		for (int col = 0; col < SIZE; col++) 
@@ -65,13 +65,13 @@ int main(void)
 			for (int c = 0; c < SIZE; c++) {
 				switch (board[r][c]) {
 					case -1:
-						std::cout << "#";
+						std::cout << "!";
 						break;
 					case 0:
-						std::cout << "0";
+						std::cout << "o";
 						break;
 					case 1:
-						std::cout << "1";
+						std::cout << "x";
 						break;
 				
 					default:
