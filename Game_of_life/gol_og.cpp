@@ -7,7 +7,7 @@ int main(void)
 	std::cin >> n >> k;
 	assert(n >= 1 && k >= 0);
 
-	int from = 0, to = 1;
+	int from {0}, to {1};
 	bool life[2][n][n];
 	
 	for (int row = 0; row < n; row++) {
