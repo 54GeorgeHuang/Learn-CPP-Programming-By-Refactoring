@@ -3,8 +3,8 @@
 
 #define SIZE 3
 #define N_PLAYERS 2
-#define PLAYER_A false
-#define PLAYER_B true
+#define PLAYER_A 0
+#define PLAYER_B 1
 
 int main(void)
 {
@@ -29,7 +29,7 @@ int main(void)
 	int move {0};
 	bool win {false};
 	// whose turn
-	bool turn {PLAYER_A};
+	int turn {PLAYER_A};
 
 	// main body
 	for (int i = 0; i < SIZE*SIZE; i++) {
