@@ -3,58 +3,65 @@
 
 int main(void)
 {
-	int n, k;
-	std::cin >> n >> k;
-	assert(n >= 1 && k >= 0);
+	int grid_size, generations;
+	std::cin >> grid_size >> generations;
+	assert(grid_size >= 1 && generations >= 0);
 
-	int from {0}, to {1};
-	bool life[2][n][n];
+	int old_state {0}, new_state {1};
+	// 2: 2 states
+	bool cells[2][grid_size][grid_size];
 	
-	for (int row = 0; row < n; row++) {
-		for (int col = 0; col < n; col++) {
+	for (int row = 0; row < grid_size; row++) 
+		for (int col = 0; col < grid_size; col++) {
 			int temp;
 			std::cin >> temp;
-			life[from][row][col] = (temp == 1)? true: false;
+			cells[old_state][row][col] = (temp == 1)? true: false;
 		}
-	}
+	
 
-	for (int iter = 0; iter < k; iter++) {
-		for (int row = 0; row < n; row++) {
-			for (int col = 0; col < n; col++) {
+	for (int iter = 0; iter < generations; iter++) {
+		// check 8 neighbors' state
+		for (int now_row = 0; now_row < grid_size; now_row++) 
+			for (int now_col = 0; now_col < grid_size; now_col++) {
 
-				int neighbor = 0;
-				for (int drow = -1; drow <= 1; drow++) {
-					for (int dcol = -1; dcol <= 1; dcol++) {
-						if (!(drow == 0 && dcol == 0)) {
-							int nRow = row + drow;
-							int nCol = col + dcol;
-							if ((nRow >= 0 && nRow < n) && (nCol >= 0 && nCol < n) && life[from][nRow][nCol]) {
-								neighbor++;
-							}
+				int live_neighbors = 0;
+
+				// compute numbers of live neighbors
+				for (int row_distance = -1; row_distance <= 1; row_distance++) 
+					for (int col_distance = -1; col_distance <= 1; col_distance++) 
+						// if not points to self
+						if ( !(row_distance == 0 && col_distance == 0)) {
+							int neighbor_row = now_row + row_distance;
+							int neighbor_col = now_col + col_distance;
+							// check for row&col validness
+							if ( (neighbor_row >= 0 && neighbor_row < grid_size) && (neighbor_col >= 0 && neighbor_col < grid_size )) 
+								if (cells[old_state][neighbor_row][neighbor_col]) 
+									live_neighbors++;
 						}
-					}
-				}
 
-				if (life[from][row][col]) {
-					life[to][row][col] = (neighbor == 2 || neighbor == 3)? true: false;
+				// compute now_cell new state
+				if (cells[old_state][now_row][now_col]) 
+					cells[new_state][now_row][now_col] = (live_neighbors == 2 || live_neighbors == 3)? true: false;
+				else 
+					cells[new_state][now_row][now_col] = (live_neighbors == 3)? true: false;
+			}
+		
+
+		// print the grid
+		std::cout << "\nAfter " << iter+1 << " generations:" << std::endl;
+		for (int row = 0; row < grid_size; row++) {
+			for (int col = 0; col < grid_size; col++) {
+				if (col+1 == grid_size) {
+					std::cout << cells[new_state][row][col] << std::endl;
 				} else {
-					life[to][row][col] = (neighbor == 3)? true: false;
+					std::cout << cells[new_state][row][col] << " ";
 				}
 			}
 		}
+		std::cout << std::endl;
 
-		from = (from == 1)? false: true;
-		to = (to == 1)? false: true;
-	}
-
-	for (int row = 0; row < n; row++) {
-		for (int col = 0; col < n; col++) {
-			if (col == n-1) {
-				std::cout << life[from][row][col] << std::endl;
-			} else {
-				std::cout << life[from][row][col] << " ";
-			}
-		}
+		old_state = (old_state == 1)? 0: 1;
+		new_state = (new_state == 1)? 0: 1;
 	}
 
 	return 0;
