@@ -9,18 +9,18 @@ int main(void)
 
 	int old_state {0}, new_state {1};
 	// 2: 2 states
-	bool grid[2][grid_size][grid_size];
+	bool cells[2][grid_size][grid_size];
 	
 	for (int row = 0; row < grid_size; row++) 
 		for (int col = 0; col < grid_size; col++) {
 			int temp;
 			std::cin >> temp;
-			grid[old_state][row][col] = (temp == 1)? true: false;
+			cells[old_state][row][col] = (temp == 1)? true: false;
 		}
 	
 
 	for (int iter = 0; iter < generations; iter++) {
-		// set each grid's state
+		// set each cell's state
 		for (int now_row = 0; now_row < grid_size; now_row++) 
 			for (int now_col = 0; now_col < grid_size; now_col++) {
 
@@ -35,26 +35,26 @@ int main(void)
 							int neighbor_col = now_col + col_distance;
 							// check for row&col validness
 							if ( (neighbor_row >= 0 && neighbor_row < grid_size) && (neighbor_col >= 0 && neighbor_col < grid_size )) 
-								if (grid[old_state][neighbor_row][neighbor_col]) 
+								if (cells[old_state][neighbor_row][neighbor_col]) 
 									live_neighbors++;
 						}
 
-				// compute now_cell new state
-				if (grid[old_state][now_row][now_col]) 
-					grid[new_state][now_row][now_col] = (live_neighbors == 2 || live_neighbors == 3)? true: false;
+				// compute current cell new state
+				if (cells[old_state][now_row][now_col]) 
+					cells[new_state][now_row][now_col] = (live_neighbors == 2 || live_neighbors == 3)? true: false;
 				else 
-					grid[new_state][now_row][now_col] = (live_neighbors == 3)? true: false;
+					cells[new_state][now_row][now_col] = (live_neighbors == 3)? true: false;
 			}
 		
 
-		// print the grid
+		// print the cells
 		std::cout << "\nAfter " << iter+1 << " generations:" << std::endl;
 		for (int row = 0; row < grid_size; row++) {
 			for (int col = 0; col < grid_size; col++) {
 				if (col+1 == grid_size) {
-					std::cout << grid[new_state][row][col] << std::endl;
+					std::cout << cells[new_state][row][col] << std::endl;
 				} else {
-					std::cout << grid[new_state][row][col] << " ";
+					std::cout << cells[new_state][row][col] << " ";
 				}
 			}
 		}
