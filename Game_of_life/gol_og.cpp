@@ -20,7 +20,7 @@ int main(void)
 	
 
 	for (int iter = 0; iter < generations; iter++) {
-		// check 8 neighbors' state
+		// set each grid's state
 		for (int now_row = 0; now_row < grid_size; now_row++) 
 			for (int now_col = 0; now_col < grid_size; now_col++) {
 
