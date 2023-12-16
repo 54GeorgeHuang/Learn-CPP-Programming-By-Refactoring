@@ -9,13 +9,13 @@ int main(void)
 
 	int old_state {0}, new_state {1};
 	// 2: 2 states
-	bool cells[2][grid_size][grid_size];
+	bool grid[2][grid_size][grid_size];
 	
 	for (int row = 0; row < grid_size; row++) 
 		for (int col = 0; col < grid_size; col++) {
 			int temp;
 			std::cin >> temp;
-			cells[old_state][row][col] = (temp == 1)? true: false;
+			grid[old_state][row][col] = (temp == 1)? true: false;
 		}
 	
 
@@ -35,15 +35,15 @@ int main(void)
 							int neighbor_col = now_col + col_distance;
 							// check for row&col validness
 							if ( (neighbor_row >= 0 && neighbor_row < grid_size) && (neighbor_col >= 0 && neighbor_col < grid_size )) 
-								if (cells[old_state][neighbor_row][neighbor_col]) 
+								if (grid[old_state][neighbor_row][neighbor_col]) 
 									live_neighbors++;
 						}
 
 				// compute now_cell new state
-				if (cells[old_state][now_row][now_col]) 
-					cells[new_state][now_row][now_col] = (live_neighbors == 2 || live_neighbors == 3)? true: false;
+				if (grid[old_state][now_row][now_col]) 
+					grid[new_state][now_row][now_col] = (live_neighbors == 2 || live_neighbors == 3)? true: false;
 				else 
-					cells[new_state][now_row][now_col] = (live_neighbors == 3)? true: false;
+					grid[new_state][now_row][now_col] = (live_neighbors == 3)? true: false;
 			}
 		
 
@@ -52,9 +52,9 @@ int main(void)
 		for (int row = 0; row < grid_size; row++) {
 			for (int col = 0; col < grid_size; col++) {
 				if (col+1 == grid_size) {
-					std::cout << cells[new_state][row][col] << std::endl;
+					std::cout << grid[new_state][row][col] << std::endl;
 				} else {
-					std::cout << cells[new_state][row][col] << " ";
+					std::cout << grid[new_state][row][col] << " ";
 				}
 			}
 		}
