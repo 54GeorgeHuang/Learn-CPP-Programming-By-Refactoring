@@ -17,10 +17,10 @@ int main(void)
 	// each player's activity on each line (used to check for winning)	
 	int rowSum[N_PLAYERS][SIZE];
 	int colSum[N_PLAYERS][SIZE];
-	int cross1[N_PLAYERS];
-	int cross2[N_PLAYERS];
+	int cross1_sum[N_PLAYERS];
+	int cross2_sum[N_PLAYERS];
 	for (int p = 0; p < N_PLAYERS; p++) {
-		cross1[p] = cross2[p] = 0;
+		cross1_sum[p] = cross2_sum[p] = 0;
 		for (int i = 0; i < SIZE; i++) 
 			rowSum[p][i] = colSum[p][i] = 0;
 	}
@@ -54,9 +54,9 @@ int main(void)
 		rowSum[turn][row]++;
 		colSum[turn][col]++;
 		if (row == col) 
-			cross1[turn]++;
+			cross1_sum[turn]++;
 		if (row + col == SIZE-1) 
-			cross2[turn]++;
+			cross2_sum[turn]++;
 		move++;
 
 		// print the board
@@ -90,7 +90,7 @@ int main(void)
 			for (int i = 0; i < SIZE; i++) 
 				if (rowSum[turn][i] == SIZE || colSum[turn][i] == SIZE) 
 					win = true;
-			if (win != true && (cross1[turn] == SIZE || cross2[turn] == SIZE)) 
+			if (win != true && (cross1_sum[turn] == SIZE || cross2_sum[turn] == SIZE)) 
 				win = true;
 			if (win) 
 				break;
