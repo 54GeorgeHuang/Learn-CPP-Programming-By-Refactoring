@@ -68,23 +68,14 @@ void print_cells(const game_of_life &game, const bool print_old = true, const in
 {
 	std::cout << "\nAfter " << iter+1 << " generations:" << std::endl;
 
-	if (print_old) {
-		auto &cells {*(game.old_state)};
-		for (int row = 0; row < game.grid_size; row++) 
-			for (int col = 0; col < game.grid_size; col++)
-				if (col+1 == game.grid_size)
-					std::cout << cells[row][col] << std::endl;
-				else
-					std::cout << cells[row][col] << " ";
-	} else {
-		auto &cells {*(game.new_state)};
-		for (int row = 0; row < game.grid_size; row++) 
-			for (int col = 0; col < game.grid_size; col++)
-				if (col+1 == game.grid_size)
-					std::cout << cells[row][col] << std::endl;
-				else
-					std::cout << cells[row][col] << " ";
-	}
+	auto &cells = print_old? *(game.old_state): *(game.new_state);
+
+	for (int row = 0; row < game.grid_size; row++) 
+		for (int col = 0; col < game.grid_size; col++)
+			if (col+1 == game.grid_size)
+				std::cout << cells[row][col] << std::endl;
+			else
+				std::cout << cells[row][col] << " ";
 
 	std::cout << std::endl;
 }
